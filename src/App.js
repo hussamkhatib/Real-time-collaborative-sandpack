@@ -1,25 +1,32 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState, useEffect } from "react";
+import MultiUserSandpack from "./MultiUserSandpack";
+import initialize from "./firebaseConfig";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+export default function App() {
+  const [input, setInput] = useState("");
+  const [name, setName] = useState(null);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setName(input);
+  };
+
+  useEffect(() => {
+    initialize();
+  }, []);
+
+  if (name) return <MultiUserSandpack name={name} />;
+  else
+    return (
+      <form onSubmit={handleSubmit}>
+        <label>
+          Enter your Name :
+          <input
+            onChange={(e) => setInput(e.target.value)}
+            value={input}
+            required
+          />
+        </label>
+        <button type="submit">Enter </button>{" "}
+      </form>
+    );
 }
-
-export default App;
