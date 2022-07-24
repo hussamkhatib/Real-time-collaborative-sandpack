@@ -1,9 +1,9 @@
 import { useEffect } from "react";
 import initialize from "./firebaseConfig";
 import { Routes, Route } from "react-router-dom";
-import Home from "./view/Home";
+import Home from "./views/Home";
 import { Provider } from "jotai";
-import Main from "./view/Main";
+import Main from "./views/Main";
 import { ChakraProvider, extendTheme } from "@chakra-ui/react";
 
 export default function App() {
@@ -18,6 +18,7 @@ export default function App() {
       },
     },
   });
+
   return (
     <ChakraProvider theme={theme}>
       <Provider>
