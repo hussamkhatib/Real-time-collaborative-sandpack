@@ -1,13 +1,11 @@
-import firebase from "firebase";
+import firebase from "firebase/app";
+import "firebase/database";
 
 const app = {
-  apiKey: "AIzaSyA2Ys6l0DZV6hphtQcW_ceHcWmOSE-6IVA",
-  authDomain: "firepad-another.firebaseapp.com",
-  projectId: "firepad-another",
-  databaseURL: "https://firepad-another-default-rtdb.firebaseio.com",
-  storageBucket: "firepad-another.appspot.com",
-  messagingSenderId: "183344666162",
-  appId: "1:183344666162:web:580d05b0310c7c43d0ce2b",
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+  projectId: process.env.REACT_APP_PROJECT_ID,
+  databaseURL: process.env.REACT_APP_DATABASE_URL,
+  appId: process.env.REACT_APP_APP_ID,
 };
 
 function initialize() {
