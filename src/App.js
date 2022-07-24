@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import initialize from "./firebaseConfig";
 import { Routes, Route } from "react-router-dom";
 import Home from "./view/Home";
+import { Provider } from "jotai";
 
 export default function App() {
   useEffect(() => {
@@ -9,8 +10,10 @@ export default function App() {
   }, []);
 
   return (
-    <Routes>
-      <Route path="/" element={<Home />} />
-    </Routes>
+    <Provider>
+      <Routes>
+        <Route path="/" element={<Home />} />
+      </Routes>
+    </Provider>
   );
 }
