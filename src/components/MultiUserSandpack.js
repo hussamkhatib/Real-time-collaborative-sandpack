@@ -1,6 +1,6 @@
 import Editor from "@monaco-editor/react";
 import React, { useRef, useEffect, useState } from "react";
-
+import { userAtom } from "../atom";
 import firebase from "firebase/app";
 import { fromMonaco } from "@hackerrank/firepad";
 import {
@@ -13,12 +13,14 @@ import {
   SandpackPreview,
 } from "@codesandbox/sandpack-react";
 import "@codesandbox/sandpack-react/dist/index.css";
+import { useAtom } from "jotai";
+import { useParams } from "react-router-dom";
 
-const MultiUserSandpack = ({ name }) => {
+const MultiUserSandpack = () => {
   return (
     <SandpackProvider template="react">
       <SandpackLayout theme="dark">
-        <SandpackEditor name={name} />
+        <SandpackEditor />
         <SandpackPreview customStyle={{ height: "100vh" }} />
       </SandpackLayout>
     </SandpackProvider>
@@ -27,7 +29,9 @@ const MultiUserSandpack = ({ name }) => {
 
 export default MultiUserSandpack;
 
-const SandpackEditor = ({ name }) => {
+const SandpackEditor = () => {
+  const params = useParams();
+  const [name] = useAtom(userAtom);
   const editorRef = useRef(null);
   const [editorLoaded, setEditorLoaded] = useState(false);
   const { code, updateCode } = useActiveCode();
@@ -47,14 +51,14 @@ const SandpackEditor = ({ name }) => {
     const dbRef = firebase
       .database()
       .ref()
-      .child(`${replaceInvalidCharacters(activePath)}`);
+      .child(`${params.id}/${replaceInvalidCharacters(activePath)}`);
     const firepad = fromMonaco(dbRef, editorRef.current);
     firepad.setUserName(name);
     return () => {
       firepad.dispose();
       setEditorLoaded(false);
     };
-  }, [editorLoaded, activePath, name]);
+  }, [editorLoaded, activePath, name, params.id]);
 
   return (
     <SandpackStack customStyle={{ height: "100vh", margin: 0 }}>
