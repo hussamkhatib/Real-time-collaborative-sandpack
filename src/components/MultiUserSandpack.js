@@ -14,7 +14,7 @@ import {
   SandpackPreview,
 } from "@codesandbox/sandpack-react";
 import "@codesandbox/sandpack-react/dist/index.css";
-import { useParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 
 const MultiUserSandpack = () => {
   const params = useParams();
@@ -33,6 +33,7 @@ export default MultiUserSandpack;
 
 const SandpackEditor = () => {
   const params = useParams();
+  let [, setSearchParams] = useSearchParams();
   const [name] = useAtom(userAtom);
   const editorRef = useRef(null);
   const [editorLoaded, setEditorLoaded] = useState(false);
@@ -55,16 +56,27 @@ const SandpackEditor = () => {
       .ref()
       .child(
         `${params.id}/${params.template}/${replaceInvalidCharacters(
-          activePath
+          activePath,
+          "-"
         )}`
       );
     const firepad = fromMonaco(dbRef, editorRef.current);
     firepad.setUserName(name);
+    setSearchParams({
+      file: activePath,
+    });
     return () => {
       firepad.dispose();
       setEditorLoaded(false);
     };
-  }, [editorLoaded, activePath, name, params.id, params.template]);
+  }, [
+    editorLoaded,
+    activePath,
+    name,
+    params.id,
+    params.template,
+    setSearchParams,
+  ]);
 
   return (
     <SandpackStack customStyle={{ height: "100vh", margin: 0 }}>
@@ -88,6 +100,14 @@ const SandpackEditor = () => {
   );
 };
 
-function replaceInvalidCharacters(path) {
-  return path.replace(/[ .#$[\] ]/g, "-");
+/**
+ * This function replaces special characters like \,#,. etc
+ * which are not allowed in firebase database ref
+ * with the string provided in paramter
+ * @param {the path that will be provided to firebase database reference} str
+ * @param {the string that gets replaced by invalid characters } replaceStr
+ */
+
+function replaceInvalidCharacters(str, replaceStr) {
+  return str.replace(/[ ./#$[\] ]/g, replaceStr);
 }
