@@ -3,6 +3,7 @@ import React, { useRef, useEffect, useState } from "react";
 import { userAtom } from "../atom";
 import firebase from "firebase/app";
 import { fromMonaco } from "@hackerrank/firepad";
+import { useAtom } from "jotai";
 import {
   useActiveCode,
   SandpackStack,
@@ -13,12 +14,13 @@ import {
   SandpackPreview,
 } from "@codesandbox/sandpack-react";
 import "@codesandbox/sandpack-react/dist/index.css";
-import { useAtom } from "jotai";
 import { useParams } from "react-router-dom";
 
 const MultiUserSandpack = () => {
+  const params = useParams();
+  const template = params.template;
   return (
-    <SandpackProvider template="react">
+    <SandpackProvider template={template}>
       <SandpackLayout theme="dark">
         <SandpackEditor />
         <SandpackPreview customStyle={{ height: "100vh" }} />
@@ -51,14 +53,18 @@ const SandpackEditor = () => {
     const dbRef = firebase
       .database()
       .ref()
-      .child(`${params.id}/${replaceInvalidCharacters(activePath)}`);
+      .child(
+        `${params.id}/${params.template}/${replaceInvalidCharacters(
+          activePath
+        )}`
+      );
     const firepad = fromMonaco(dbRef, editorRef.current);
     firepad.setUserName(name);
     return () => {
       firepad.dispose();
       setEditorLoaded(false);
     };
-  }, [editorLoaded, activePath, name, params.id]);
+  }, [editorLoaded, activePath, name, params.id, params.template]);
 
   return (
     <SandpackStack customStyle={{ height: "100vh", margin: 0 }}>

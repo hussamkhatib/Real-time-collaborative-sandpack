@@ -1,7 +1,7 @@
 import { userAtom } from "../atom";
 import { useRef } from "react";
 import { Button } from "@chakra-ui/react";
-import { Box, Input, FormControl, FormLabel } from "@chakra-ui/react";
+import { Box, Input, FormLabel } from "@chakra-ui/react";
 import { useAtom } from "jotai";
 
 const UserForm = () => {
@@ -15,13 +15,13 @@ const UserForm = () => {
 
   return (
     <Box p="4" maxW="960px" mx="auto">
-      <FormControl as="form" onSubmit={handleSubmit}>
+      <Box as="form" onSubmit={handleSubmit}>
         <FormLabel htmlFor="name">Enter your Name</FormLabel>
-        <Input id="name" type="text" ref={_input} isRequired />
+        <Input id="name" type="text" ref={_input} required />
         <Button mt="1.5" colorScheme="main" type="submit">
           Enter
         </Button>
-      </FormControl>
+      </Box>
     </Box>
   );
 };

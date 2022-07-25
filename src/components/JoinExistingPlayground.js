@@ -46,10 +46,10 @@ const JoinExistingPlayground = () => {
           <FormErrorMessage>{error}</FormErrorMessage>
         ) : (
           <FormHelperText>
-            Eg: 1b9d6bcd-bbfd-4b2d-9b5d-ab8dfbbd4bed
+            Eg: "1b9d6bcd-bbfd-4b2d-9b5d-ab8dfbbd4bed/react"
           </FormHelperText>
         )}
-        <Button colorScheme="main" type="submit">
+        <Button mt="1.5" colorScheme="main" type="submit">
           Join
         </Button>
       </FormControl>

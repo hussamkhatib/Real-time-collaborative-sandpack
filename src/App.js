@@ -24,7 +24,7 @@ export default function App() {
       <Provider>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path=":id" element={<Main />} />
+          <Route path="/:id/:template" element={<Main />} />
         </Routes>
       </Provider>
     </ChakraProvider>
