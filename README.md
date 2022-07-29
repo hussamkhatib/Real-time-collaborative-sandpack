@@ -2,6 +2,9 @@
 
 This example shows how you can use Sandpack and firepad-x to build a collbrative text editor.
 
+https://user-images.githubusercontent.com/52914487/181750695-f7d5bb29-7d40-46ff-a316-5fdf31c1cc4b.mp4
+
+
 ## Running locally
 ### Step 1. Clone the repo
 ```bash
@@ -22,3 +25,8 @@ Then set each variable on `.env.local`:
 yarn install
 yarn dev
 ```
+
+Credits:
+- [Sandpack](https://sandpack.codesandbox.io/)
+- [firepad-x](https://github.com/interviewstreet/firepad-x)
+- [Collaborative Coding in Monaco Editor - Shubham Shekhar](https://dev.to/shubham567/collaborative-coding-in-monaco-editor-4foa)
